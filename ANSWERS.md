@@ -2,7 +2,7 @@
 
 GitHub username: AdamNarxoz
 Session code: MAPLE-66
-Fingerprint: c4674864
+Fingerprint: 943731e2
 
 > Fill in the three lines above from `my_data/DATA.md`. Do not rename headings or table columns: a script reads the numbers.
 > Write only in the empty cells and lines. Percentages as 0.78 or 78 %, money as plain numbers.
