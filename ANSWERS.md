@@ -61,60 +61,45 @@ Personal-data pages per year sent abroad under H:501875
 
 ### 2b. Memo (at most 300 words)
 
-The overall extraction accuracy for Pipeline H is greater than Pipeline L (86.11% vs 80.56%) and the estimated annual cost is lower for Pipeline H ($20,190.49 vs $21,600). But Pipeline H is taking the images of the invoices in a data centre in another country, which is problematic in terms of privacy, as 25% of the pages contain personal names and ИИН. This is about 501,875 pages out of country per year.
+The locally developed vision-language model pipeline L is recommended.
 
-The accuracy level for clean Kazakh invoices is the lowest at 76.67% for Pipeline H. The accuracy of Pipeline L is the lowest on degraded Russian invoices, achieving 70.00% accuracy. Both pipelines showed promising results, which suggests that they should be evaluated in other languages and in different scan conditions.
+Pipeline H has an overall accuracy of 87.22% whereas L's accuracy is 86.67%. But when it comes to degraded Russian invoices, H is less accurate than L (66.67% accuracy vs. 80.00%). These 95% Wilson interval do not exclude 0, so more testing would be required to determine if the difference is statistically significant.
 
-If you are interested in information you're only going to be using for yourself, I recommend Pipeline L. While it is $1,409.51 costlier per year and lower in accuracy, it can help minimize cross-border data-transfer risks by having local processing. Cross-border processing might be considered if Pipeline H is selected, provided there is sufficient data protection safeguards and legal access to cross border processing. Prior to deployment, I would test both pipelines with larger data sets and tune up its worst language-condition combinations. I would also check invoice numbers, dates, seller IDs and totals, on a case-by-case basis.
+Pipeline H costs approximately $20,205.64 per year, while L costs $21,600.00. The extra annual expense of L is about $1,394.36. This is a small extra charge for maintaining the images of the invoices in our own system, and providing better observed performance on bad Russian scans.
+
+The privacy issue is noteworthy. Under H. Pipeline L, about 501,875 personal-data pages would be sent abroad each year at 5,500 pages per day, where approximately 25% have personal information, such as the name of the individual and a code or identifier for the person's IIN.
+
+The test would be completed on a larger data set (including a representative degraded scan set of all three languages) before the pipelines were deployed. I would also validate the number of errors I would see in the field—particularly in invoice totals, dates, and seller ID—and confirm L's actual throughput and operating costs. Low-confidence extractions and high impact errors should be monitored for production and/or reviewed by humans.
+
+So I've decided to go with L, since there's a trade-off with performance on the least computer-heavy test condition, but the control of personal data is on my side, and the extra annual cost is not a significant amount.
 
 ## Part 3: Explain your own numbers
 
-**1. Language tokenisation**
-
-Kazakh's token-to-byte ratio is higher than the ratio for English. Some of the difference in the number of bytes comes from UTF-8 encoding and the additional overhead from the tokenizer, which yields more tokens.
-
-**2. Embedding model truncation**
-
-The token 434 belongs to the embedding model, which has a maximum of 512 tokens. The sentence should, therefore, be less than the length of the input window, but later sections may be cut off.
-
-**3. Temperature and probability**
-
-The probability of the top token, “Monday,” is estimated at 84.6%. A smaller temperature causes the distribution of probabilities to be more peaked around the top-scoring token, but it does not affect what tokens are on top or eliminate alternatives.
-
-**4. Memorisation and factual errors**
-
-The lower bound estimated when asking about an account number is 22.7%, and for the public figures' birthdays, it is 25.3%. Multiplication and arithmetic sequences are not included as they are able to be solved by rules. This limitation cannot be removed by a prompt that tells a model not to generate facts: the model may choose to refrain from doing so.
-
-**5. Tokens per parameter**
-
-The model contains roughly 322 tokens/training parameter, whereas the reference ratio used by the Chinchilla model is 20. This is roughly 16.10 times as many training tokens per parameter under this comparison.
-
 ### Q1
 
-Number: 1.67
+Number: 1.85
 
-Why: Kazakh's token premium is about 1.67 times its byte premium. UTF-8 encoding explains part of the difference, but the tokenizer adds substantial overhead.:
+Why:  Kazakh has 1.96 times as many UTF-8 bytes as English but 3.62 times as many tokens. The normalized ratio of 1.85 indicates that the tokenizer adds a substantial premium beyond the difference explained by byte length.
 
 ### Q2
 
-Number:434 e5 tokens
+Number: 552   
 
-Why: The answer sentence starts within the first 512 e5 tokens, so it can fit in the embedding model's input window. No truncation error is expected for this sentence, although later text may be truncated.
+Why:  The sentence starts beyond the 512-token limit. A question matching only that sentence cannot retrieve the truncated chunk through that evidence, and truncation may occur silently without an obvious error.
 
 ### Q3
 
-Number: 84.6%
+Number: 39.5%
 
-Why: Lower temperature makes the probability distribution sharper, increasing Monday's probability without changing the token ranking. All five tokens remain possible because temperature scaling alone does not remove tokens.
+Why: Increasing the temperature preserves the ranking of tokens but makes their probabilities more uniform. All listed tokens remain possible to sample because softmax assigns each a positive probability.
 
 ### Q4
 
-Number: 22.7%
+Number: 24
 
-Why: I excluded multiplication and arithmetic sequences because they can be solved using learned rules rather than memorized facts. A system prompt saying “never invent a fact” cannot change this bound; it may encourage abstention instead.
+Why: The public leaderboard prefers X because it has 76 correct answers versus Y's 74. The penalized score favors Y because it makes fewer mistakes and can abstain without penalty, illustrating how evaluation rules shape model behavior.
 
 ### Q5
 
-Number: 16.10
-
-Why: The model uses 16.10 times Chinchilla's compute-optimal tokens-per-parameter ratio, so it is over-trained by this criterion. Chinchilla showed that GPT-3-sized models were under-trained and that smaller models trained on more tokens could perform better at comparable compute.
+Number: 15.00
+Why: The model uses 300 tokens per parameter, compared with Chinchilla's 20. By this ratio, it is over-trained relative to the stated compute-optimal benchmark. Chinchilla argued that models such as GPT-3 were under-trained and could benefit from more training data.
