@@ -64,24 +64,29 @@ Personal-data pages per year sent abroad under H:
 ### Q1
 
 Number: 1.67
+
 Why Kazakh's token premium is about 1.67 times its byte premium. UTF-8 encoding explains part of the difference, but the tokenizer adds substantial overhead.:
 
 ### Q2
 
 Number:434 e5 tokens
+
 Why The answer sentence starts within the first 512 e5 tokens, so it can fit in the embedding model's input window. No truncation error is expected for this sentence, although later text may be truncated.:
 
 ### Q3
 
 Number: 84.6%
+
 Why  Lower temperature makes the probability distribution sharper, increasing Monday's probability without changing the token ranking. All five tokens remain possible because temperature scaling alone does not remove tokens.:
 
 ### Q4
 
 Number: 22.7%
+
 Why I excluded multiplication and arithmetic sequences because they can be solved using learned rules rather than memorized facts. A system prompt saying “never invent a fact” cannot change this bound; it may encourage abstention instead.:
 
 ### Q5
 
 Number: 16.10
+
 Why The model uses 16.10 times Chinchilla's compute-optimal tokens-per-parameter ratio, so it is over-trained by this criterion. Chinchilla showed that GPT-3-sized models were under-trained and that smaller models trained on more tokens could perform better at comparable compute.:
