@@ -9,7 +9,7 @@ Fingerprint: 943731e2
 
 ## AI-use declaration
 
-(About half a page: which assistants or tools you used and for what. If you used none, say so.)
+I let ChatGPT help me understand the requirements of the assignment, verify formulas, compute retrieval metrics and confidence intervals, and approximate annual cost of the model. I used Python and pandas to make sense of the CSV files generated and to check my work in Google Colab. I also discussed how accurate one needs to be in order to keep the computations low, the privacy of the data, and behavior of the model. The numerical results are computed for my synthetic data and the parameter given in the assignment. I reviewed the figures and made the final decisions on the figures.
 
 ## Part 1: Retrieval and cost decision
 
