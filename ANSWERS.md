@@ -24,10 +24,10 @@ Fingerprint: 943731e2
 
 | candidate | recall@k | lower | upper |
 |---|---|---|---|
-| A, k=3 |33/60	|55.00% |42.49%–66.91% |
-| A, k=5 |40/60	|66.67%	|54.06%–77.27% |
-| B, k=3 |19/60	|31.67%	|21.31%–44.23% |
-| B, k=5 |36/60	|60.00%	|47.37%–71.43% |
+| A, k=3 |0.5500 |0.4249 |0.6691 |
+| A, k=5 |0.6667 |0.5406 |0.7727 |
+| B, k=3 |0.3167 |0.2131 |0.4423 |
+| B, k=5 |0.6000 |0.4737 |0.7143 |
 
 ### 1c. Annual model cost in USD
 
@@ -42,7 +42,7 @@ Fingerprint: 943731e2
 
 Chosen candidate:B, k=5
 
-I recommend config B with k=5. Its annual cost is $15,755.12, which is within the $18,400 budget. It achieves 60.00% overall recall (95% Wilson interval: 47.37%–71.43%). Config A has higher recall (66.67%) but is too expensive and has a budget of $27,918.82, which is not in the budget. Intervals for B with k=3 and B with k=5 overlap, so it is not possible to conclude that there is a statistically significant difference between their recall using intervals. For B with k=5, recall is 60% for EN, 65% for RU, and 55% for KK. Users of the language Kazakh get the worst service, and it would be better to improve service for them.
+I would like to suggest using config B (k=5). Its annual cost is $15,755.12, which is within the $18,400 budget. It achieves 60.00% recall (95% Wilson interval: 47.37%–71.43%). While Config A provides a higher recall (66.67%), it is more expensive ($27,918.82) than the budget. By itself, the overlap of the Wilson intervals for the two values of k, k=3 and k=5, does not necessarily indicate that there is no statistically significant difference. For config B with k=5, recall is 60% for EN, 65% for RU, and 55% for KK. For the three languages, the recall is lowest in Kazakh, so strengthening the retrieval of the language should be prioritized.
 
 ### 1e. Next measurement (at most 60 words)
 
@@ -61,11 +61,11 @@ Personal-data pages per year sent abroad under H:501875
 
 ### 2b. Memo (at most 300 words)
 
-The overall extraction accuracy for Pipeline H is higher than Pipeline L (86.11% vs. 80.56%) and the estimated annual cost is lower ($20,190.49 vs. $21,600). In a data centre abroad, however, Pipeline H processes images of invoices, which raises a privacy concern: 25% of the pages include personal names and ИИН. This is about 501,875 pages per year exported.
+The overall extraction accuracy for Pipeline H is greater than Pipeline L (86.11% vs 80.56%) and the estimated annual cost is lower for Pipeline H ($20,190.49 vs $21,600). But Pipeline H is taking the images of the invoices in a data centre in another country, which is problematic in terms of privacy, as 25% of the pages contain personal names and ИИН. This is about 501,875 pages out of country per year.
 
-The pipeline is weak with respect to Kazakh clean invoices too, with an accuracy of 76.67%. The most challenging sets are the degraded Russian invoices, with only 70.00% accuracy. These results demonstrate the need for more testing of both pipelines in different languages and scan conditions.
+The accuracy level for clean Kazakh invoices is the lowest at 76.67% for Pipeline H. The accuracy of Pipeline L is the lowest on degraded Russian invoices, achieving 70.00% accuracy. Both pipelines showed promising results, which suggests that they should be evaluated in other languages and in different scan conditions.
 
-If storing personal information within the borders of Kazakhstan is of primary importance, then Pipeline L is recommended. It might be $1,409.51 more expensive per year, but it results in greater inaccuracy, it's local processing which means less risk of sending sensitive information to other countries. Pipeline H could be chosen if legal and suitable data protection measures are put in place and cross-border processing is allowed. Prior to deployment I tested both pipelines on a bigger set of data, optimized the performance of their weakest cells and ensure that the invoice number, dates, seller ID and totals are being extracted correctly.
+If you are interested in information you're only going to be using for yourself, I recommend Pipeline L. While it is $1,409.51 costlier per year and lower in accuracy, it can help minimize cross-border data-transfer risks by having local processing. Cross-border processing might be considered if Pipeline H is selected, provided there is sufficient data protection safeguards and legal access to cross border processing. Prior to deployment, I would test both pipelines with larger data sets and tune up its worst language-condition combinations. I would also check invoice numbers, dates, seller IDs and totals, on a case-by-case basis.
 
 ## Part 3: Explain your own numbers
 
@@ -93,28 +93,28 @@ The model contains roughly 322 tokens/training parameter, whereas the reference 
 
 Number: 1.67
 
-Why Kazakh's token premium is about 1.67 times its byte premium. UTF-8 encoding explains part of the difference, but the tokenizer adds substantial overhead.:
+Why: Kazakh's token premium is about 1.67 times its byte premium. UTF-8 encoding explains part of the difference, but the tokenizer adds substantial overhead.:
 
 ### Q2
 
 Number:434 e5 tokens
 
-Why The answer sentence starts within the first 512 e5 tokens, so it can fit in the embedding model's input window. No truncation error is expected for this sentence, although later text may be truncated.:
+Why: The answer sentence starts within the first 512 e5 tokens, so it can fit in the embedding model's input window. No truncation error is expected for this sentence, although later text may be truncated.
 
 ### Q3
 
 Number: 84.6%
 
-Why  Lower temperature makes the probability distribution sharper, increasing Monday's probability without changing the token ranking. All five tokens remain possible because temperature scaling alone does not remove tokens.:
+Why: Lower temperature makes the probability distribution sharper, increasing Monday's probability without changing the token ranking. All five tokens remain possible because temperature scaling alone does not remove tokens.
 
 ### Q4
 
 Number: 22.7%
 
-Why I excluded multiplication and arithmetic sequences because they can be solved using learned rules rather than memorized facts. A system prompt saying “never invent a fact” cannot change this bound; it may encourage abstention instead.:
+Why: I excluded multiplication and arithmetic sequences because they can be solved using learned rules rather than memorized facts. A system prompt saying “never invent a fact” cannot change this bound; it may encourage abstention instead.
 
 ### Q5
 
 Number: 16.10
 
-Why The model uses 16.10 times Chinchilla's compute-optimal tokens-per-parameter ratio, so it is over-trained by this criterion. Chinchilla showed that GPT-3-sized models were under-trained and that smaller models trained on more tokens could perform better at comparable compute.:
+Why: The model uses 16.10 times Chinchilla's compute-optimal tokens-per-parameter ratio, so it is over-trained by this criterion. Chinchilla showed that GPT-3-sized models were under-trained and that smaller models trained on more tokens could perform better at comparable compute.
