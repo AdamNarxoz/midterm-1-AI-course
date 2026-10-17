@@ -42,11 +42,11 @@ Fingerprint: 943731e2
 
 Chosen candidate:B, k=5
 
-I recommend config B with k=5. Its annual cost is $15,755.12, which is within the $18,400 budget. It achieves 60.00% overall recall (95% Wilson interval: 47.37%–71.43%). Config A with k=5 has higher recall (66.67%), but costs $27,918.82 and exceeds the budget. The intervals for B with k=3 and B with k=5 overlap, so we cannot conclude that their recall differs statistically using these intervals. For B with k=5, recall is 60% for EN, 65% for RU, and 55% for KK. Kazakh-speaking users are served worst, so improving retrieval for Kazakh should be a priority.
+I recommend config B with k=5. Its annual cost is $15,755.12, which is within the $18,400 budget. It achieves 60.00% overall recall (95% Wilson interval: 47.37%–71.43%). Config A has higher recall (66.67%) but is too expensive and has a budget of $27,918.82, which is not in the budget. Intervals for B with k=3 and B with k=5 overlap, so it is not possible to conclude that there is a statistically significant difference between their recall using intervals. For B with k=5, recall is 60% for EN, 65% for RU, and 55% for KK. Users of the language Kazakh get the worst service, and it would be better to improve service for them.
 
 ### 1e. Next measurement (at most 60 words)
 
-Run a larger, stratified retrieval evaluation with more EN, RU, and KK questions, especially Kazakh questions. Measure recall@5 and compute 95% Wilson intervals for each language and candidate. This would show whether the observed language differences persist and whether the extra cost of config A is justified by a reliable improvement in retrieval quality.
+Conduct a more comprehensive retrieval assessment based on more EN, RU and KK questions, particularly Kazakh questions. Calculate a 95% Wilson interval for each language and each candidate and report the results of @recall. This would indicate whether the observed language differences endure, and whether the increased expense of config A is warranted by obtaining reliable retrieval improvements.
 
 ## Part 2: A document pipeline you can defend
 
@@ -61,11 +61,11 @@ Personal-data pages per year sent abroad under H:501875
 
 ### 2b. Memo (at most 300 words)
 
-Pipeline H achieves higher overall extraction accuracy (86.11%) than Pipeline L (80.56%) and has a lower estimated annual cost of $20,190.49 compared with $21,600. However, Pipeline H processes invoice images in a data centre abroad, creating a privacy concern because 25% of pages contain personal names and ИИН. This represents approximately 501,875 pages per year sent abroad.
+The overall extraction accuracy for Pipeline H is higher than Pipeline L (86.11% vs. 80.56%) and the estimated annual cost is lower ($20,190.49 vs. $21,600). In a data centre abroad, however, Pipeline H processes images of invoices, which raises a privacy concern: 25% of the pages include personal names and ИИН. This is about 501,875 pages per year exported.
 
-Pipeline H also has a weakness in Kazakh clean invoices, where accuracy is only 76.67%. Pipeline L performs worst on degraded Russian invoices, with 70.00% accuracy. These results show that both pipelines need further testing across languages and scan conditions.
+The pipeline is weak with respect to Kazakh clean invoices too, with an accuracy of 76.67%. The most challenging sets are the degraded Russian invoices, with only 70.00% accuracy. These results demonstrate the need for more testing of both pipelines in different languages and scan conditions.
 
-I recommend Pipeline L if keeping personal data within Kazakhstan is the priority. Although it costs $1,409.51 more per year and has lower overall accuracy, local processing reduces the risk associated with transferring sensitive information abroad. Pipeline H could be selected if cross-border processing is legally permitted and appropriate data protection safeguards are implemented. Before deployment, I would test both pipelines on a larger dataset, improve performance on their weakest cells, and verify extraction accuracy for invoice numbers, dates, seller IDs, and totals.
+If storing personal information within the borders of Kazakhstan is of primary importance, then Pipeline L is recommended. It might be $1,409.51 more expensive per year, but it results in greater inaccuracy, it's local processing which means less risk of sending sensitive information to other countries. Pipeline H could be chosen if legal and suitable data protection measures are put in place and cross-border processing is allowed. Prior to deployment I tested both pipelines on a bigger set of data, optimized the performance of their weakest cells and ensure that the invoice number, dates, seller ID and totals are being extracted correctly.
 
 ## Part 3: Explain your own numbers
 
