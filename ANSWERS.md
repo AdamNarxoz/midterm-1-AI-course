@@ -1,8 +1,8 @@
 # Midterm 1: answers
 
-GitHub username:
-Session code:
-Fingerprint:
+GitHub username: AdamNarxoz
+Session code: MAPLE-66
+Fingerprint: c4674864
 
 > Fill in the three lines above from `my_data/DATA.md`. Do not rename headings or table columns: a script reads the numbers.
 > Write only in the empty cells and lines. Percentages as 0.78 or 78 %, money as plain numbers.
@@ -63,25 +63,25 @@ Personal-data pages per year sent abroad under H:
 
 ### Q1
 
-Number:
-Why (at most 40 words):
+Number: 1.67
+Why Kazakh's token premium is about 1.67 times its byte premium. UTF-8 encoding explains part of the difference, but the tokenizer adds substantial overhead.:
 
 ### Q2
 
-Number:
-Why (at most 40 words):
+Number:434 e5 tokens
+Why The answer sentence starts within the first 512 e5 tokens, so it can fit in the embedding model's input window. No truncation error is expected for this sentence, although later text may be truncated.:
 
 ### Q3
 
-Number:
-Why (at most 40 words):
+Number: 84.6%
+Why  Lower temperature makes the probability distribution sharper, increasing Monday's probability without changing the token ranking. All five tokens remain possible because temperature scaling alone does not remove tokens.:
 
 ### Q4
 
-Number:
-Why (at most 40 words):
+Number: 22.7%
+Why I excluded multiplication and arithmetic sequences because they can be solved using learned rules rather than memorized facts. A system prompt saying “never invent a fact” cannot change this bound; it may encourage abstention instead.:
 
 ### Q5
 
-Number:
-Why (at most 40 words):
+Number: 16.10
+Why The model uses 16.10 times Chinchilla's compute-optimal tokens-per-parameter ratio, so it is over-trained by this criterion. Chinchilla showed that GPT-3-sized models were under-trained and that smaller models trained on more tokens could perform better at comparable compute.:
