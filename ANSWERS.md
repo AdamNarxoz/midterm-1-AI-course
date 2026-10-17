@@ -54,14 +54,40 @@ Run a larger, stratified retrieval evaluation with more EN, RU, and KK questions
 
 | pipeline | overall accuracy | weakest cell (language, condition) | accuracy there | lower | upper | annual cost |
 |---|---|---|---|---|---|---|
-| H | | | | | | |
-| L | | | | | | |
+| H |86.11%	|KK, clean |76.67%	|59.07% |88.21% |$20,190.49 |
+| L |80.56%	|RU, degraded |70.00% |52.12%	|83.34%	|$21,600.00 |
 
-Personal-data pages per year sent abroad under H:
+Personal-data pages per year sent abroad under H:501875
 
 ### 2b. Memo (at most 300 words)
 
+Pipeline H achieves higher overall extraction accuracy (86.11%) than Pipeline L (80.56%) and has a lower estimated annual cost of $20,190.49 compared with $21,600. However, Pipeline H processes invoice images in a data centre abroad, creating a privacy concern because 25% of pages contain personal names and ИИН. This represents approximately 501,875 pages per year sent abroad.
+
+Pipeline H also has a weakness in Kazakh clean invoices, where accuracy is only 76.67%. Pipeline L performs worst on degraded Russian invoices, with 70.00% accuracy. These results show that both pipelines need further testing across languages and scan conditions.
+
+I recommend Pipeline L if keeping personal data within Kazakhstan is the priority. Although it costs $1,409.51 more per year and has lower overall accuracy, local processing reduces the risk associated with transferring sensitive information abroad. Pipeline H could be selected if cross-border processing is legally permitted and appropriate data protection safeguards are implemented. Before deployment, I would test both pipelines on a larger dataset, improve performance on their weakest cells, and verify extraction accuracy for invoice numbers, dates, seller IDs, and totals.
+
 ## Part 3: Explain your own numbers
+
+**1. Language tokenisation**
+
+Kazakh's token-to-byte ratio is higher than the ratio for English. Some of the difference in the number of bytes comes from UTF-8 encoding and the additional overhead from the tokenizer, which yields more tokens.
+
+**2. Embedding model truncation**
+
+The token 434 belongs to the embedding model, which has a maximum of 512 tokens. The sentence should, therefore, be less than the length of the input window, but later sections may be cut off.
+
+**3. Temperature and probability**
+
+The probability of the top token, “Monday,” is estimated at 84.6%. A smaller temperature causes the distribution of probabilities to be more peaked around the top-scoring token, but it does not affect what tokens are on top or eliminate alternatives.
+
+**4. Memorisation and factual errors**
+
+The lower bound estimated when asking about an account number is 22.7%, and for the public figures' birthdays, it is 25.3%. Multiplication and arithmetic sequences are not included as they are able to be solved by rules. This limitation cannot be removed by a prompt that tells a model not to generate facts: the model may choose to refrain from doing so.
+
+**5. Tokens per parameter**
+
+The model contains roughly 322 tokens/training parameter, whereas the reference ratio used by the Chinchilla model is 20. This is roughly 16.10 times as many training tokens per parameter under this comparison.
 
 ### Q1
 
