@@ -24,27 +24,29 @@ Fingerprint: 943731e2
 
 | candidate | recall@k | lower | upper |
 |---|---|---|---|
-| A, k=3 | | | |
-| A, k=5 | | | |
-| B, k=3 | | | |
-| B, k=5 | | | |
+| A, k=3 |33/60	|55.00% |42.49%–66.91% |
+| A, k=5 |40/60	|66.67%	|54.06%–77.27% |
+| B, k=3 |19/60	|31.67%	|21.31%–44.23% |
+| B, k=5 |36/60	|60.00%	|47.37%–71.43% |
 
 ### 1c. Annual model cost in USD
 
 | candidate | annual cost |
 |---|---|
-| A, k=3 | |
-| A, k=5 | |
-| B, k=3 | |
-| B, k=5 | |
+| A, k=3 |$20,989.97 |
+| A, k=5 |$27,918.82 |
+| B, k=3 |$13,691.75 |
+| B, k=5 |$15,755.12 |
 
 ### 1d. Decision (at most 150 words)
 
-Chosen candidate:
+Chosen candidate:B, k=5
 
-(Decision, using your intervals and the budget. Give the recall of your choice for EN, RU and KK separately.)
+I recommend config B with k=5. Its annual cost is $15,755.12, which is within the $18,400 budget. It achieves 60.00% overall recall (95% Wilson interval: 47.37%–71.43%). Config A with k=5 has higher recall (66.67%), but costs $27,918.82 and exceeds the budget. The intervals for B with k=3 and B with k=5 overlap, so we cannot conclude that their recall differs statistically using these intervals. For B with k=5, recall is 60% for EN, 65% for RU, and 55% for KK. Kazakh-speaking users are served worst, so improving retrieval for Kazakh should be a priority.
 
 ### 1e. Next measurement (at most 60 words)
+
+Run a larger, stratified retrieval evaluation with more EN, RU, and KK questions, especially Kazakh questions. Measure recall@5 and compute 95% Wilson intervals for each language and candidate. This would show whether the observed language differences persist and whether the extra cost of config A is justified by a reliable improvement in retrieval quality.
 
 ## Part 2: A document pipeline you can defend
 
